@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "About";
+}
+
+@*@Scripts.Render("~/Content/About.js")*@
+@Styles.Render("~/Content/About.css")
+
+@*<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'>*@
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.8/typicons.min.css'>
+
+
+<!-- About Section
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<style>
+
+    .bird-container {
+        z-index: 0;
+    }
+</style>
+<div class="about-container" id="about-us">
+    <div class="row">
+        <h1 style="margin-top:10%">About</h1>
+
+
+    </div>
+    <div class="row">
+        <div class="six columns">
+            <h3><span class="typcn typcn-device-desktop icon"></span>Our Process</h3>
+            <p>
+                Follow the process exactly, not deviating from it or using your own knowledge. Make edits to anything that needs to be clarified.Follow the process and trust the leader.
+            </p>
+        </div>
+        <div class="six columns">
+            <h3><span class="typcn typcn-pen icon"></span>Our Approach</h3>
+            <p>
+                Each member of the team is responsible for owning their work, collaborating effectively with  team members, and striving for excellence.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+            <div class="six columns">
+                <h3><span class="typcn typcn-cog-outline icon"></span>Our Goal</h3>
+                <p>Our Chat was born with a simple premise: to help entrepreneurs and small teams have better conversations with leads and customers.</p>
+            </div>
+            <div class="six columns">
+                <h3><span class="typcn typcn-lightbulb icon"></span>Our Mission</h3>
+                <p>  The phrase “this journey is 1% finished” is posted on our walls, reminding us that we’ve only begun to fulfill our mission to make the world  work closer together.</p>
+            </div>
+    </div>
+</div>
+
+
+<!-- Skills Section
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<div class="about-container" id="technologies" style="color:aliceblue; padding-top: 25%">
+    <h1 style="color:aliceblue">Services</h1>
+    <div class="row">
+        <div class="one-third column">
+            <h3 style="color:aliceblue">Design</h3>
+            <p>Mainly we used purple & gray hues for a combination of royalty and safety at the technical parts of the chat and orange for the main UX.</p>
+        </div>
+
+        <div class="one-third column">
+            <h3 style="color:aliceblue">Development</h3>
+            <p>Developers Developers Developers...<br/> Our inspiration... <a href="https://www.youtube.com/watch?v=Vhh_GeBPOhs">click here</a></p>
+        </div>
+        <div class="one-third column">
+            <h3 style="color:aliceblue">Marketing</h3>
+            <p>By using our Statistics page the user has a lead for either corporate or personal desicions.Please see more in our <a href="@Url.Action("Index", "Statistics", new { id = User.Identity.GetUserId() })">Statistics page</a></p>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: +75px;">
+        <div class="eight columns">
+            <div class="progressBar">
+                <h4 style="color:aliceblue">HTML5</h4>
+                <div class="progressBarContainer">
+                    <div class="progressBarValue value-70"></div>
+                </div>
+            </div>
+            <div class="progressBar">
+                <h4 style="color:aliceblue">CSS3</h4>
+                <div class="progressBarContainer">
+                    <div class="progressBarValue value-90"></div>
+                </div>
+            </div>
+            <div class="progressBar">
+                <h4 style="color:aliceblue">SingalR</h4>
+                <div class="progressBarContainer">
+                    <div class="progressBarValue value-80"></div>
+                </div>
+            </div>
+            <div class="progressBar">
+                <h4 style="color:aliceblue">Javascript , Jquery </h4>
+                <div class="progressBarContainer">
+                    <div class="progressBarValue value-100"></div>
+                </div>
+
+            </div>
+            <div class="eight columns">
+                <p style="font-size:medium; display: inline-block;">
+                    *All bars difficulty are counted from 0 to
+                </p>
+                <img style="display: inline-block;" src="~/Content/paspa.jpg" />
+            </div>
+        </div>
+    </div>
+</div>

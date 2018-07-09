@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" href="~/Content/favicon.ico" sizes="32x32">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewBag.Title - CondorChat</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/MasterLayoutF.css")
+    @Styles.Render("~/Content/MasterLayout.js")
+    @Styles.Render("~/Content/MasterLayout.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/core.min.css")
+    @Styles.Render("~/Content/font-awesome.min.css")
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald:300">
+    @*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    @Styles.Render("~/Content/Birds.css")
+    @RenderSection("styles", required: false)
+    @RenderSection("adminstyles", required: false)
+    @RenderSection("GodStyle", required: false)
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+<body>
+
+    @*WHEN YOU DO NOT WANT THE BIRDS ANIMATION : COPY PASTE THE FOLLOWING TO YOUR VIEW *@
+    @*
+        <style>
+
+            .bird-container {
+
+            display:none;
+            }
+
+
+        </style>
+    *@
+    @* END OF CODE *@
+
+
+    @*when you  want the birds animation to fly at the back : copy paste the following to your view *@
+
+    <style>
+
+        .bird-container {
+            z-index: 0;
+        }
+    </style>
+
+    @* end of code *@
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md justify-content-center nav-back sticky-top">
+        <a href="/" class="navbar-brand d-flex w-50 mr-auto"><img src="~/Content/logo.png" height="50" width="50" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+            <ul class="navbar-nav w-100 justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index","Home")">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("MeettheTeam", "Home")">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("About","Home")">About</a>
+                </li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </nav>
+
+
+    <main class="back">
+        <div class="bird-container bird-container--one">
+            <div class="bird bird--one"></div>
+        </div>
+
+        <div class="bird-container bird-container--two">
+            <div class="bird bird--two"></div>
+        </div>
+
+        <div class="bird-container bird-container--three">
+            <div class="bird bird--three"></div>
+        </div>
+
+        <div class="bird-container bird-container--four">
+            <div class="bird bird--four"></div>
+        </div>
+        @RenderBody()
+    </main>
+
+    <footer id="myFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 myCols">
+                    <img src="~/Content/Artboard1.png">
+                </div>
+                <div class="col-sm-3 myCols">
+                    <h5>About us</h5>
+                    <ul>
+                        <li><a href="@Url.Action("About","Home")#about-us">Our View</a></li>
+                        <li><a href="#" id="contact-us">Contact us</a></li>
+                        <li><a href="@Url.Action("About","Home")#technologies">Our Technologies</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 myCols">
+                    <h5>The Team</h5>
+                    <ul>
+                        <li><a href="@Url.Action("MeettheTeam","Home")#first">Gerogiannis Giannis</a></li>
+                        <li><a href="@Url.Action("MeettheTeam","Home")#second">Karipidis Anestis</a></li>
+                        <li><a href="@Url.Action("MeettheTeam","Home")#third">Koronaios Theodore</a></li>
+                        <li><a href="@Url.Action("MeettheTeam","Home")#fourth">Kanellopoulos Nikolaos</a></li>
+                        <li><a href="@Url.Action("MeettheTeam","Home")#fifth">Stavrianakis Nikolaos</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 myCols">
+                    <h5>Find us on</h5>
+                    <div class="social-networks">
+                        <a href="https://twitter.com/?lang=el" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/anestis.karipidis.94" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://plus.google.com/discover" class="google"><i class="fab fa-google-plus"></i></a>
+                        <a href="https://www.instagram.com/nickanel/" class="insta"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2018 Copyright $!Scripts </p>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <script src="~/Content/FooterJS.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <script>
+        // contact us
+        $('#contact-us').click(function () {
+            let email = 'mailto: condorChat@JabaScripts.org?subject =This%20is%20the%20subject&cc & body=message % 20goes % 20here';
+            window.location.href = email;
+        });
+    </script>
+</body>
+</html>

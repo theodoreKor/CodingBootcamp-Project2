@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Home Page";
+    
+}
+
+<link href="~/Content/HomePage.css" rel="stylesheet" />
+<link href="~/Content/AnAnimations.css" rel="stylesheet" />
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                
+            </div>
+            <div class="col-sm-4">
+                <div class="home-title"><h2>Welcome to</h2><h1>Condor Chat</h1></div>
+                <button id="private-button" type="button" class="btn btn-primary anestis anestis-button hidden hidden-after" onclick="location.href='@Url.Action("Index","Chat")'">Private</button>
+                <button id="public-button" type="button" class="btn btn-primary anestis anestis-button hidden hidden-after" onclick="location.href='@Url.Action("Index","PublicChat")'">Public</button>
+                <button id="back-button" type="button" class="btn btn-primary anestis anestis-button hidden hidden-after">Back</button>
+                <button id="chat-button" type="button" class="btn btn-primary anestis anestis-button animated buttondown shown">Chat</button>
+                <button id="stats-button" type="button" class="btn btn-primary anestis anestis-button animated buttonleft shown" onclick="location.href='@Url.Action("Index", "Statistics", new { id = User.Identity.GetUserId() })'">Stats</button>
+                <button id="edit-button" type="button" class="btn btn-primary anestis anestis-button animated buttonright shown" onclick="location.href='@Url.Action("Index","Manage")'">Edit</button>
+                <button id="logout-button" type="button" class="btn btn-primary anestis anestis-button animated buttonup shown" onclick="javascript:document.getElementById('logoutForm').submit()">Log Out</button>
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+        </div>
+    </div>
+
+<script>
+    $('#chat-button').click(function () {
+        $('.shown').each(function () {
+            $(this).slideUp();
+        });
+        $('.hidden-after').each(function () {
+            $(this).removeClass('hidden');
+        });
+    });
+    $('#back-button').click(function () {
+        $('.shown').each(function () {
+            $(this).fadeIn();
+        });
+        $('.hidden-after').each(function () {
+            $(this).addClass('hidden');
+        });
+    });
+</script>

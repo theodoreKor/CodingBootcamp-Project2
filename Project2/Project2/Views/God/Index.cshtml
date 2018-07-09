@@ -1,0 +1,198 @@
+﻿@model PagedList.IPagedList<Project2.Models.Message>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "God";
+}
+
+<div class="container-fluid">
+    <div class="row upper-bar">
+        <div class="col-lg-8">
+            <div class="row upper-bar-pages">
+                <div class="col-lg-2 upper-bar-pages-page-selected">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                </div>
+                <div class="col-lg-10">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 upper-bar-search">
+            @using (Html.BeginForm("Index", "God", FormMethod.Get))
+            {
+                @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { placeholder = "search..." })
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var message in Model)
+        {
+            <div class="col-lg-4 card-all">
+                <div class="row card-message">
+                    <div class="col-lg-5 card-left">
+                        <p>From: @message.Sender.UserName</p>
+                        <img style="display:inline-block;" class="card-image" src="@message.Sender.Avatar" />
+                        <p>To: @message.Receiver.UserName</p>
+                        <img class="card-image" src="@message.Receiver.Avatar" />
+                    </div>
+                    <div class="col-lg-7 card-right">
+                        <h6>Message</h6>
+                        <div id="card-right-message-scrollable"style="overflow: auto;">@message.Body</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section GodStyle{
+    <style>
+        
+        /****************** Pagination ***************/
+        .pagination {
+            margin: 0 !important;
+        }
+
+        .upper-bar-pages {
+            padding-top: 1rem;
+        }
+
+        .upper-bar-pages-page-selected {
+            color: white;
+            padding-top: 0.5rem;
+        }
+        
+        /******************** Search  *******************/
+        .upper-bar {
+            margin-bottom: 1rem;
+        }
+
+        .upper-bar-search {
+            padding-right: 2rem;
+        }
+
+        input[type=text] {
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url(https://www.w3schools.com/howto/searchicon.png);
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width .4s ease-in-out;
+            transition: width .4s ease-in-out;
+            float: right;
+        }
+
+            /* When the input field gets focus, change its width to 100% */
+            input[type=text]:focus {
+                width: 100%;
+            }
+
+        /******************* Card Text ******************/
+        p {
+            opacity: 0;
+            font-size: 11px;
+        }
+
+        h6 {
+            opacity: 0;
+            color: white;
+        }
+
+        .card-message:hover p {
+            opacity: 1;
+        }
+
+        .card-message:hover h6 {
+            opacity: 1;
+        }
+
+        /******************* Card Style *******************/
+        .card-all {
+            margin-bottom: 1rem;
+        }
+
+        .card-message {
+            width: 99%;
+            height: 10rem;
+            color: white;
+            transition: all .2s ease-in-out;
+        }
+
+        .card-message:hover {
+            transform : scale(1.2);
+            z-index: 99999;
+        }
+
+        .card-message:hover .card-left {
+            background-color: rgba(29,70,117,1);
+        }
+
+        .card-message:hover .card-right {
+            background-color: rgba(82,92,92,1);
+        }
+
+        .separator {
+            width: 1rem;
+        }
+
+        /***************** Card Left ******************/
+        .card-left {
+            background-color: rgba(29,70,117,0.7);
+            border-radius: 15px 0 0 15px;
+            text-align: center;
+        }
+
+            .card-left img {
+                margin: auto;
+            }
+
+        .card-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+        }
+        /****************** Card Right *****************/
+        .card-right h6 {
+            text-align: center;
+            text-decoration: underline;
+        }
+
+        .card-right {
+            background-color: rgba(6,12,12,0.7);
+            border-radius: 0 15px 15px 0;
+            overflow: auto;
+        }
+
+        #card-right-message-scrollable{
+            overflow: auto;
+            height: 7rem;
+        }
+
+        @@media only screen and (max-width: 1000px) {
+            .card-message {
+                height: 100%;
+                max-width: 600px;
+                margin: auto;
+            }
+
+                .card-message:hover {
+                    transform: scale(1,1);
+                }
+
+            .card-left {
+                border-radius: 15px 15px 0 0;
+            }
+
+            .card-right {
+                border-radius: 0 0 15px 15px;
+            }
+        }
+    </style>
+}

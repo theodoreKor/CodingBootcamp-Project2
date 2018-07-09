@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Project2.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-lg-4">
+        <a href="@Url.Action("Create", "ApplicationUsers")" class="btn btn-info btn-lg" role="button" aria-pressed="true" style="margin-top: 10px; margin-bottom: 10px;">Create New User</a>
+    </div>
+    <div class="col-lg-4">
+
+    </div>
+    <div class="col-lg-4">
+        @using (Html.BeginForm("Index", "ApplicationUsers", FormMethod.Get))
+        {
+            <div>
+                @Html.TextBox("searchString", null, new { @class = "form-control", style="margin: auto; margin-top: 1rem; float: right;", placeholder = "search" })
+            </div>
+        }
+    </div>
+    
+</div>
+
+<div class="table-responsive" style="height: calc(100vh - 160px);">
+    <table class="table table-hover" style="color:white; background: rgba(70, 75, 84, 0.8);">
+        <thead>
+            <tr style="text-align:center; font-size: larger; font-weight:600;">
+                <th scope="col" class="centerize">
+                    @Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UsernameSorting })
+                </th>
+                <th scope="col" class="centerize">
+                    @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSorting })
+                </th>
+                <th scope="col" class="centerize">
+                    @Html.ActionLink("Role", "Index", new { sortOrder = ViewBag.RoleSorting })
+                </th>
+                <th scope="col" class="centerize">
+                    @Html.DisplayNameFor(model => model.EmailConfirmed)
+                </th>
+                <th scope="col" class="centerize">
+                    @Html.ActionLink("PhoneNumber", "Index", new { sortOrder = ViewBag.RoleSorting })
+                </th>
+                <th scope="col" class="centerize">
+                    Edit
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.UserName != "ChatBot")
+                {
+                    <tr>
+                        <td class="centerize">
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td class="centerize">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td class="centerize">
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td class="centerize">
+                            @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                        </td>
+                        <td class="centerize">
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        @if (item.UserName == User.Identity.Name || item.UserName == "Admin" || item.UserName == "Goddess")
+                        {
+                            <td class="centerize">
+                                <a href="@Url.Action("Edit", "ApplicationUsers", new { id = item.Id })" class="btn btn-info btn-lg button-sm disabled" role="button" aria-pressed="true">Edit</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="centerize">
+                                <a href="@Url.Action("Edit", "ApplicationUsers", new { id = item.Id })" class="btn btn-info btn-lg button-sm" role="button" aria-pressed="true">Edit</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section styles{
+    <style>
+        .btn:hover {
+            color:black;
+        }
+        .centerize {
+            text-align: center !important;
+        }
+        .button-sm {
+            display: inline-block !important;
+            padding: 0 !important;
+            width: 4em;
+        }
+    </style>
+    }

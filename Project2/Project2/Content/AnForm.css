@@ -1,0 +1,151 @@
+﻿
+
+
+#buttonchange:hover, #buttonchange:focus {
+    background: #179b77;
+}
+
+
+.myheader h1 {
+    font-size: 51px;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    color: #fff;
+    font-weight: 600;
+    margin: 70px 0px;
+}
+
+.myform-main h2 {
+    color: #fff;
+    font-size: 29px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding-bottom: 15px;
+}
+
+.myform-main {
+    max-width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.34);
+    padding: 42px 35px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+    background: rgba(21, 13, 44, 0.68);
+    text-align: center;
+    min-width: 270px;
+}
+
+
+
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 15px 0px 15px 42px;
+    border: 1px solid #fff;
+    outline: none;
+    font-size: 14px;
+    color: #fff;
+    /*margin: 14px 0px;*/
+    font-family: 'Roboto', sans-serif;
+    align-self: center;
+}
+
+input[type="UserName"] {
+    background: url("../Content/Images/Form-Icons/user1.png") no-repeat 3px 8px;
+    background-size: 40px;
+    align-self: center;
+    width: 100%;
+    padding: 15px 0px 15px 42px;
+    border: 1px solid #fff;
+    outline: none;
+    font-size: 14px;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    /*margin: 14px 0px;*/
+}
+
+input[type="email"] {
+    background: url("../Content/Images/Form-Icons/mail.png") no-repeat 10px 11px;
+    background-size: 24px;
+}
+
+input[type="password"] {
+    background: url("../Content/Images/Form-Icons/pass.png") no-repeat 8px 9px;
+    background-size: 28px;
+}
+
+.myform-main span {
+    font-size: 16px;
+    color: red;
+    float: left;
+    width: 100%;
+    margin-top: 8px;
+    font-family: 'Roboto', sans-serif;
+    padding-bottom: 3px;
+    text-align: center;
+}
+
+.myform-main h6 {
+    font-size: 16px;
+    float: right;
+    width: 37%;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-top: 8px;
+    text-decoration: underline;
+}
+
+.myform-main a {
+    color: #fff;
+    transition: 0.5s all;
+}
+
+    .myform-main a:hover {
+        color: rgba(208, 95, 216, 0.9);
+        transition: 0.5s all;
+    }
+
+
+
+
+
+.validation-summary-errors.text-danger {
+    font-size: 20px;
+    text-align: left;
+}
+
+.anestis {
+    margin: auto;
+    padding: 5px;
+    padding-left: 5px;
+}
+
+.anestis-input {
+    margin-bottom: 1rem;
+}
+
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 12px 16px;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+    color: #ffffff;
+    background: none;
+    border: 1px solid white;
+    width:100%
+
+}
+

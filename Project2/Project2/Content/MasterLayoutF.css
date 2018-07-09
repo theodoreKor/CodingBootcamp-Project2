@@ -1,0 +1,246 @@
+﻿/** {
+    box-sizing: border-box;
+}
+
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.generic-anchor {
+    color: #8DB9ED;
+}
+
+    .generic-anchor:visited {
+        color: #8DB9ED;
+    }
+
+    .generic-anchor:hover {
+        color: #ccc;
+    }
+
+.flex-rw {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+main {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 10em "Oswald", sans-serif;
+    color: #9b9b9b;
+    line-height: 1;
+}
+
+footer {
+    background: linear-gradient(to right,#343434,#7e50a3, #91A3B0, #B2BEB5 );
+    margin-top: auto;
+    width: 100%;
+}
+
+.footer-list-top {
+    width: 20%;
+}
+
+    .footer-list-top > li {
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+.footer-list-header {
+    padding: 20% 0 5px 0;
+    color: #fff;
+    font: 2.3vw "Oswald", sans-serif;
+    font-size:300%;
+}
+
+.footer-list-anchor {
+    font: 1.3em "Open Sans", sans-serif;
+}
+
+.footer-social-section {
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    margin-top: 5px;
+}
+
+    .footer-social-section::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: 10px;
+        border-top: 1px solid #ccc;
+        width: calc(100% - 20px);
+    }
+
+.footer-social-overlap {
+    position: relative;
+    z-index: 2;
+    background: #373737;
+    padding: 0 20px;
+}
+
+.footer-social-connect {
+    display: flex;
+    align-items: center;
+    font: 3.5em "Oswald", sans-serif;
+    color: #fff;
+}
+
+.footer-social-small {
+    font-size: 0.6em;
+    padding: 0px 20px;
+}
+
+.footer-social-overlap > a {
+    font-size: 3em;
+}
+
+    .footer-social-overlap > a:not(:first-child) {
+        margin-left: 0.38em;
+    }
+
+.footer-bottom-section {
+    width: 100%;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+    .footer-bottom-section > div:first-child {
+        margin-right: auto;
+    }
+
+.footer-bottom-wrapper {
+    font-size: 1.5em;
+    color: #fff;
+}
+
+.footer-address {
+    display: inline;
+    font-style: normal;
+}*/
+
+
+#myFooter {
+    background-color: #373a48;
+    color: white;
+}
+
+    #myFooter .footer-copyright {
+        background-color: #383737;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        text-align: center;
+    }
+
+        #myFooter .footer-copyright p {
+            margin: 10px;
+            color: #ccc;
+        }
+
+    #myFooter ul {
+        list-style-type: none;
+        padding-left: 0;
+        line-height: 1.7;
+    }
+
+    #myFooter h5 {
+        font-size: 18px;
+        color: white;
+        font-weight: bold;
+        margin-top: 30px;
+    }
+
+    #myFooter a {
+        color: #d2d1d1;
+        text-decoration: none;
+    }
+
+        #myFooter a:hover, #myFooter a:focus {
+            text-decoration: none;
+            color: white;
+        }
+
+    #myFooter .myCols {
+        text-align: center;
+    }
+
+    #myFooter .social-networks {
+        text-align: center;
+        padding-top: 30px;
+        padding-bottom: 38px;
+    }
+
+        #myFooter .social-networks a {
+            font-size: 32px;
+            margin-right: 5px;
+            margin-left: 5px;
+            color: #f9f9f9;
+            padding: 10px;
+            transition: 0.2s;
+        }
+
+            #myFooter .social-networks a:hover {
+                text-decoration: none;
+            }
+
+    #myFooter .facebook:hover {
+        color: #0077e2;
+    }
+
+    #myFooter .google:hover {
+        color: #ef1a1a;
+    }
+
+    #myFooter .twitter:hover {
+        color: #00aced;
+    }
+
+    #myFooter .insta:hover {
+        color: coral;
+    }
+
+@media screen and (max-width: 767px) {
+    #myFooter {
+        text-align: center;
+    }
+}
+
+
+
+/* CSS used for positioning the footers at the bottom of the page. */
+/* You can remove this. */
+
+
+/*html {
+    height: 100% !important;
+}*/
+
+/*body {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    min-height: 200px;
+}
+
+#myFooter {
+    flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+}*/

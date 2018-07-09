@@ -1,0 +1,24 @@
+body {
+    background: #E5E4E2;
+}
+
+.start {
+  display:  inline-block;
+  margin: 0 auto;
+}
+
+.container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40%;
+    text-align: start;
+    font-size: 95px;
+    color: #000000 ;
+    font-weight: 100;
+    font-family: 'Lato', sans-serif;
+}
+.container span {
+  padding: 0 1vw;
+  transition: all 1s;
+}

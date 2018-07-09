@@ -1,0 +1,47 @@
+﻿ @model Project2.Models.RegisterViewModel
+
+    <link href="~/content/AnForm.css" rel="stylesheet" type="text/css" media="all">
+
+
+    @*    CSS FOR BIRDS TO FLY AT THE BACK *@
+    <style>
+
+        .bird-container {
+            z-index: 0;
+        }
+    </style>
+    @* end of css for birds to fly at the back *@
+    <div class="myform-main" style="width: 40%;">
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h2>Create a new account</h2>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="anestis-input">
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control anestis", @placeholder = "Username", @type = "UserName" })
+            </div>
+
+            <div class="anestis-input">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control anestis", @placeholder = "E-mail", @type = "Email" })
+            </div>
+
+            <div class="anestis-input">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control anestis", @placeholder = "Password", @type = "password" })
+            </div>
+
+            <div class="anestis-input">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control anestis", @placeholder = "Confirm password" })
+            </div>
+
+            <input type="submit" value="Register" class="btn btn-default" id="buttonchange" />
+
+        }
+        <p> <br /><a href="@Url.Action("Login","Account")" style="font-size:large "> Already Have an Account? </a></p>
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,352 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,900);
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#slideshow {
+    margin: 0 auto;
+    padding-top: 50px;
+    height: 600px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.slideshow-title {
+    font-family: 'Allerta Stencil';
+    font-size: 62px;
+    color: #fff;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 25%;
+    letter-spacing: 3px;
+    font-weight: 300;
+}
+
+.sub-heading {
+    padding-top: 50px;
+    font-size: 18px;
+}
+
+.sub-heading-two {
+    font-size: 15px;
+}
+
+.sub-heading-three {
+    font-size: 13px;
+}
+
+.sub-heading-four {
+    font-size: 11px;
+}
+
+.sub-heading-five {
+    font-size: 9px;
+}
+
+.sub-heading-six {
+    font-size: 7px;
+}
+
+.sub-heading-seven {
+    font-size: 5px;
+}
+
+.sub-heading-eight {
+    font-size: 3px;
+}
+
+.sub-heading-nine {
+    font-size: 1px;
+}
+
+.entire-content {
+    margin: auto;
+    width: 190px;
+    perspective: 1000px;
+    position: relative;
+    padding-top: 80px;
+}
+
+.content-carrousel {
+    width: 100%;
+    position: absolute;
+    float: right;
+    animation: rotar 15s infinite linear;
+    transform-style: preserve-3d;
+}
+
+    .content-carrousel:hover {
+        animation-play-state: paused;
+        cursor: pointer;
+    }
+
+    .content-carrousel figure {
+        width: 100%;
+        height: 120px;
+        border: 1px solid #3b444b;
+        overflow: hidden;
+        position: absolute;
+    }
+
+        .content-carrousel figure:nth-child(1) {
+            transform: rotateY(0deg) translateZ(300px);
+          
+        }
+
+        .content-carrousel figure:nth-child(2) {
+            transform: rotateY(70deg) translateZ(300px);
+            
+        }
+
+        .content-carrousel figure:nth-child(3) {
+            transform: rotateY(140deg) translateZ(300px);
+            
+        }
+
+        .content-carrousel figure:nth-child(4) {
+            transform: rotateY(210deg) translateZ(300px);
+           
+        }
+
+        .content-carrousel figure:nth-child(5) {
+            transform: rotateY(280deg) translateZ(300px);
+    
+        }
+
+        .content-carrousel figure:nth-child(6) {
+            transform: rotateY(350deg) translateZ(300px);
+
+        }
+
+.shadow {
+    position: absolute;
+    box-shadow: 0px 0px 20px 0px #000;
+    border-radius: 1px;
+}
+
+.content-carrousel img {
+    image-rendering: auto;
+    transition: all 300ms;
+    width: 100%;
+    height: 100%;
+}
+
+    .content-carrousel img:hover {
+        transform: scale(1.2);
+        transition: all 300ms;
+    }
+
+@keyframes rotar {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+#videotutorials: hover {
+    animation-play-state: paused;
+    cursor: pointer;
+}
+
+
+.embiggen {
+    text-shadow: 0 0 40px darkslategrey;
+    font-family: Raleway,"Segoe UI",sans-serif;
+    font-size: 5em;
+    text-align: center;
+    color:aliceblue;
+}
+
+/************************** POLYGON AVATARS ******************************/
+
+
+
+
+.containers {
+    width: 550px;
+    height: 100%;
+    margin-left: 10px;
+}
+
+.pic {
+    box-shadow: 6px 6px 7px #888888;
+    width: 300px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 100px;
+    margin-left: 50%;
+    border-radius: 0.5em;
+}
+
+    .pic:before {
+        content: '';
+        margin-top: -63px;
+        margin-left: -80px;
+        position: absolute;
+        width: 450px;
+        height: 450px;
+        background: url('https://scontent.fath2-1.fna.fbcdn.net/v/t1.0-9/29512792_10213850338245783_759443392661429255_n.jpg?_nc_cat=0&oh=d2526c629f88ca4379d483276c0bc625&oe=5BBE97DE') center center;
+        background-position-y: 25%;
+        background-position-x: 25%;
+        image-orientation: 10grad;
+        -ms-transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    .pic:hover, .box1:hover, .box2:hover, .social1:hover, .social2:hover, .social3:hover {
+        box-shadow: 3px 3px 7px #888888;
+        cursor: pointer;
+    }
+
+
+
+    .box2:before {
+        content: '';
+        margin-top: -74px;
+        margin-left: -31px;
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: url('http://i-cdn.phonearena.com/images/articles/220901-image/Here-is-how-the-start-screen-of-Google-Maps-looks-like.jpg') center center;
+        -ms-transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+.social1 {
+    box-shadow: 6px 6px 7px #888888;
+    width: 80px;
+    height: 80px;
+    background-color: #3b5998;
+    margin-top: -57px;
+    margin-left: 305px;
+    )
+}
+
+    .social1 > i {
+        font-size: 60px;
+        margin-top: 13px;
+        margin-left: 20px;
+       
+        color: #ffffff;
+    }
+
+.social2 {
+    box-shadow: 6px 6px 7px #888888;
+    width: 80px;
+    height: 80px;
+    background-color: #C73B6F;
+    margin-top: -7px;
+    margin-left: 305px;
+}
+
+    .social2 > i {
+        font-size: 60px;
+        margin-top: 8px;
+        margin-left: 13px;
+        color: #ffffff;
+    }
+
+
+.content {
+    height: 100%;
+    width: 500px;
+}
+
+p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h2 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.contentHead {
+    font-size: 60px;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+sup {
+    font-style: italic;
+    font-size: smaller;
+}
+
+span {
+    color: pink;
+}
+
+/*.back {
+    background: url(("https://upload.wikimedia.org/wikipedia/commons/0/0b/Mountains-1412683.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+     background-size: cover; 
+}*/
+
+/********************* BIRDS GO OFF HIGER ************************/
+
+.bird-container--one {
+    top:10%;
+    -webkit-animation-duration: 15s;
+    animation-duration: 15s;
+    -webkit-animation-delay: 0;
+    animation-delay: 0;
+}
+
+.bird-container--two {
+    top: 10%;
+    -webkit-animation-duration: 16s;
+    animation-duration: 16s;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+}
+
+.bird-container--three {
+    top:12%;
+    -webkit-animation-duration: 14.6s;
+    animation-duration: 14.6s;
+    -webkit-animation-delay: 9.5s;
+    animation-delay: 9.5s;
+}
+
+.bird-container--four {
+    top:10%;
+    -webkit-animation-duration: 16s;
+    animation-duration: 16s;
+    -webkit-animation-delay: 10.25s;
+    animation-delay: 10.25s;
+}
+
+/***************** TEAM CUSTOMIZATION ********************/
+
+#Gerogiannis::before {
+    background: url(https://scontent.fath2-1.fna.fbcdn.net/v/t1.0-9/19247718_10212507588181038_2563119777115696286_n.jpg?_nc_cat=0&oh=e7547e3f70642c0716c70969d3c2d881&oe=5B89B0B0) center center;
+}
+
+#Anestis::before {
+    background: url("https://scontent.fath2-1.fna.fbcdn.net/v/t1.0-9/22228380_10210187055296451_3396884024212134488_n.jpg?_nc_cat=0&oh=10cf18ae1dd23f87ad4ae7d846881377&oe=5BBD0931") center center;
+    background-position-y: 5%;
+}
+
+#Koronaios::before {
+    /*background: url("https://scontent.fath2-1.fna.fbcdn.net/v/t1.0-9/25629_442173694464_2571059_n.jpg?_nc_cat=0&oh=1d84ae3b3c1c0c7184f5dbbff3faf448&oe=5B86CC43") center center;*/
+    background: url("https://scontent.fath3-4.fna.fbcdn.net/v/t1.0-9/31826_454294264464_7970143_n.jpg?_nc_cat=0&oh=0bef3c3b80a6ffbd2cb6cb6fd1023d99&oe=5B7CD934");
+    /*background-position-y: 85%;*/
+    background-position-y: 100%;
+    background-position-x: 58%;
+    transform: inherit;
+}
+
+#Kannelos::before {
+    background: url("https://scontent.fath2-1.fna.fbcdn.net/v/t1.0-9/13151661_1737896296426329_2392882635808536857_n.jpg?_nc_cat=0&oh=c57957ff4d3ec941429e09e48e9a173b&oe=5BC391FD") center center;
+    background-position-y: 55%;
+    background-position-x: 65%;
+}

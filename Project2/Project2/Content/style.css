@@ -1,0 +1,99 @@
+/*@import url(https://weloveiconfonts.com/api/?family=fontawesome);*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+a {
+    color: #9a2853;
+}
+
+    a:hover {
+        text-decoration: none;
+        color: #d35585;
+    }
+
+
+    .content span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 2em;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+.footer-container {
+    position: relative;
+    z-index:3;
+}
+
+.footer {
+    background: linear-gradient(to bottom right,#7e50a3 30%, #91A3B0, #B2BEB5 );
+    position: relative;
+}
+
+    .footer .inner {
+        width: 80%;
+        height: 30%;
+        margin: 0 auto;
+        position: relative;
+    }
+
+        .footer .inner span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 1.8em;
+            color: #999999;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+
+        }
+
+.pre-footer {
+    background: #3f3f3f;
+    position: absolute;
+    top: -40px;
+    height: 120px;
+    width: 100%;
+}
+
+.footer-menu {
+    width: 80%;
+    margin: 0 auto;
+    zoom: 1;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    height: 100%;
+}
+
+    .footer-menu:before, .footer-menu:after {
+        content: "";
+        display: table;
+    }
+
+    .footer-menu:after {
+        clear: both;
+    }
+
+    .footer-menu > li {
+        display: block;
+        float: left;
+        width: 25%;
+        text-align: center;
+        padding-left: 240px;
+    }
+
+    .footer-menu h3 {
+        height: 40px;
+        line-height: 40px;
+        font-size: 1.3em;
+        font-weight: 700;
+        color: #cccccc;
+    }

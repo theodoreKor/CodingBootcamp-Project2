@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNet.Identity
+
+<style>
+    .partial-margin {
+        margin-top: 0.3em;
+    }
+</style>
+
+@if (Request.IsAuthenticated)
+{
+<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "partial-login" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    <li class="nav-item">
+        <a href="@Url.Action("Avatar", "Manage")"><img id="avatarImg" src="" style="height:50px; width: 50px; border-radius: 100%;" /></a>
+    </li>
+    @if (User.Identity.Name == "Admin")
+    {
+        <li class="nav-item partial-margin">@Html.ActionLink("Admin Page", "Index", "ApplicationUsers", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+    }
+    else if (User.Identity.Name == "Goddess")
+    {
+        <li class="nav-item partial-margin">@Html.ActionLink("God Page", "Index", "God", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+    }
+    else
+    {
+
+        <li class="nav-item partial-margin">@Html.ActionLink(User.Identity.Name, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })</li>
+        <li id="admin-page" style="display:none;" class="nav-item partial-margin">@Html.ActionLink("Admin Page", "Index", "ApplicationUsers", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+    }
+
+    <li class="nav-item partial-margin"><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log Out</a></li>
+</ul>
+}
+else
+{
+    if (ViewBag.CameFromPage == "Register")
+    {
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+            <li class="nav-item">@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="nav-link" })</li>
+        </ul>
+    }
+    else
+    {
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+            <li class="nav-item">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="nav-link" })</li>
+        </ul>
+    }
+    
+}
+
+<script>
+    let avatar = "";
+    let role = "";
+    $.ajax({
+        url: "@Url.Action("GetCurrentUser", "UserRepository")",
+        method: "GET",
+        success: function (response) {
+            avatar = response.user.Avatar;
+            role = response.user.Role;
+
+            // set avatar
+            $('#avatarImg').attr('src', `${avatar}`);
+
+            // set admin-page if admin
+            if (role === 0) {
+                console.log("true");
+                $('#admin-page').css('display', 'inline-block');
+            }
+        }
+    });
+</script>

@@ -1,0 +1,86 @@
+﻿@using Project2.Models
+@using Microsoft.AspNet.Identity
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Manage- Avatar";
+}
+
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">*@
+<link href="~/content/AnForm.css" rel="stylesheet" type="text/css" media="all">
+
+    @*    CSS FOR BIRDS TO FLY AT THE BACK *@
+    <style>
+
+        .bird-container {
+            z-index: 0;
+        }
+
+        /*************** Arrows ******************/
+        #avatar-triangle-right {
+            width: 0;
+            height: 0;
+            border-top: 50px solid transparent;
+            border-left: 100px solid #4d5390;
+            border-bottom: 50px solid transparent;
+            float: right;
+        }
+
+        #avatar-triangle-right:hover {
+            border-top: 50px solid transparent;
+            border-left: 100px solid #929bfb;
+            border-bottom: 50px solid transparent;
+        }
+
+        .avatar-manage-arrows {
+            padding-top: 14rem;
+        }
+
+        #to-manage-settings {
+            opacity: 0;
+            text-align: right;
+        }
+
+    </style>
+    @* end of css for birds to fly at the back *@
+
+    <div class="container-fluid">
+        <div  class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6" style="padding-top: 4rem;">
+                <div class="main-custom">
+                    <div class="myform-main">
+                        <h2>Avatar</h2>
+                        @using (Html.BeginForm("Avatar", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+
+
+                            <input type="file" name="file" value="Browse" class="btn btn-default" id="buttonchange", style="overflow: hidden;" />
+                            <input type="submit" value="Upload" class="btn btn-default" id="buttonchange" />
+
+
+                         }
+
+                    </div>
+               </div>
+            </div>
+            <div class="col-md-3 avatar-manage-arrows">
+                <div id="to-manage-settings" class="col-sm-12">To Manage</div>
+                <div id="avatar-triangle-right" onclick="location.href= '@Url.Action("ManageSettings","Manage", new { id = User.Identity.GetUserId()})'"></div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    $('#avatar-triangle-right').hover(function () {
+        $('#to-manage-settings').css('opacity', 1);
+    })
+    $('#avatar-triangle-right').mouseout(function () {
+        $('#to-manage-settings').css('opacity', 0);
+    })
+</script>

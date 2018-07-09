@@ -1,0 +1,814 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+<div class="container-fluid">
+    
+        
+        <div class="row">
+            <!--   ============================== User List ==============================   -->
+            <div class="col-md-3">
+
+                <div class="row">
+                    <div class="col-md-12" id="chat_label">
+                        <p id="public_chat_title">Welcome to Public Chat</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <div id="connecter_users_header">
+                            Number of connected users:
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div id="user_count"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="user_list"></div>
+                </div>
+
+            </div>
+            <!--   ============================== Connected User Username ==============================   -->
+            <div class="col-md-9">
+                <div class="row">
+                    <div id="logged_in_username"></div>                   
+                </div>
+                <!--   ============================== Chat Area ==============================   -->
+                <div class="row">
+                    <div id="chat_area" class="col-md-12">
+                    </div>
+                </div>
+                <!--   ============================== Chat Text Input & Buttons ==============================   -->
+                <div class="row">
+                    <div class="col-md-5" id="text_input">
+                        <input id="message" type="text" placeholder="Type your message here" autocomplete="off" />
+                        @*<input id="message" type="text" placeholder="Type your message here" onfocus="this.value=''" autocomplete="off" />*@
+                    </div>
+                    <div class="col-md-7">                       
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success btn-block" id="send">Send</button>
+                            </div>
+                            @*<div class="col-sm-6">
+                                <button type="button" class="btn btn-danger btn-block" id="delete">Delete All</button>
+                            </div>*@
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-block" id="load_history">Load History</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-info btn-block" id="clear">Clear</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
+
+    <script>        
+
+        //================================================================================================//
+
+        // Implementation for message likes in right answers
+        
+        $(document).on('click', '.heart_right', function (e) {
+
+            let heart_id = e.currentTarget.id;
+
+            var heart_clicks = parseInt($(`#${heart_id}`).text());            
+
+            let heart_class = e.target.className; // get the class of click target   
+           
+            if (heart_class === 'far fa-heart heart_right') {
+                
+                $(`#${heart_id}`).removeClass('far fa-heart heart_right');
+                $(`#${heart_id}`).addClass('fas fa-heart heart_right');
+                heart_clicks++;
+                $(":first", `#${heart_id}`).html(heart_clicks);
+
+                publicChatHub.server.clickHeart(heart_id, 1); // Send "1" to hub for a like
+            }
+            else {
+               
+                $(`#${heart_id}`).removeClass('fas fa-heart heart_right');
+                $(`#${heart_id}`).addClass('far fa-heart heart_right');
+                heart_clicks--;
+
+                if (heart_clicks === 0) {
+                    $(":first", `#${heart_id}`).html("0");
+                }
+                else {
+                    $(":first", `#${heart_id}`).html(heart_clicks);
+                    
+                }             
+
+                publicChatHub.server.clickHeart(heart_id, -1); // Send "-1" to hub for a dislike            
+            }                  
+        })
+        //================================================================================================//
+        
+        // Implementation for message likes in left answers      
+
+        $(document).on('click', '.heart_left', function (e) { 
+
+            let heart_id = e.currentTarget.id;
+
+            var heart_clicks = parseInt($(`#${heart_id}`).text());
+
+            let heart_class = e.target.className; // get the class of click target                   
+
+            console.log(heart_class);
+
+            if (heart_class === 'far fa-heart heart_left') {
+
+                $(`#${heart_id}`).removeClass('far fa-heart heart_left');
+                $(`#${heart_id}`).addClass('fas fa-heart heart_left');
+                heart_clicks++;
+                $(":first", `#${heart_id}`).html(heart_clicks);
+
+                publicChatHub.server.clickHeart(heart_id, 1); // Send "1" to hub for a like
+            }
+            else {
+
+                $(`#${heart_id}`).removeClass('fas fa-heart heart_left');
+                $(`#${heart_id}`).addClass('far fa-heart heart_left');
+                heart_clicks--;
+
+                if (heart_clicks === 0) {
+                    $(":first", `#${heart_id}`).html("0");
+                }
+                else {
+                    $(":first", `#${heart_id}`).html(heart_clicks);    
+
+                }
+
+                publicChatHub.server.clickHeart(heart_id, -1); // Send "-1" to hub for a dislike    
+               
+            }           
+        })
+        //================================================================================================//
+    
+        //================================================================================================//
+
+        // den vazoume oute $function() oute function init() giati bugevei
+
+        var publicChatHub = $.connection.publicChatHub;
+
+        $.connection.hub.start().done(function () { // xwris auto den douleuei!
+            console.log("works.");
+        });
+
+        // returns the number of conntected users
+        publicChatHub.client.updateCount = function (number_of_clients) {
+            //$("#user_count").html("Number of connected users right now: " + number_of_clients);
+            $("#user_count").html(number_of_clients);
+            console.log("number of clients:" + number_of_clients);
+        }
+
+        // returns the list of connected usernames
+        publicChatHub.client.getList = function (list_of_clients) {
+            $("#user_list").empty();
+            let user_list = '';
+            for (var i = 0; i < list_of_clients.length; i++) {
+
+                //===========================================================================================//
+                // to be https in Azure
+                let url = "http://" + window.location.host + "@Url.Action("GetAvatarByUsername", "UserRepository")" +
+                    "/?username=" + list_of_clients[i];
+
+                let client_username = list_of_clients[i]; // using var keeps the same username          
+                    
+                let avatar_url = "";
+
+                // ajax call to get the avatar of the current username
+                $.get(url)
+                    .then((response) => {
+                        avatar_url = response.avatarUrl;
+                        
+                        user_list =
+                            `<div id="${client_username}" class="list_user">
+                                <div class="list_avatar" data-toggle="tooltip" data-placement="top" title="Logged in">
+                                    <img src="${avatar_url}" alt="${client_username}">                            
+                                </div>
+                                <div class="list_name">${client_username}</div>
+                            </div>`
+                        $("#user_list").append(user_list);
+                    });
+
+                //===========================================================================================//
+                //user_list =
+                //    `<div id="${list_of_clients[i]}" class="list_user">
+                //        <div class="list_avatar" data-toggle="tooltip" data-placement="top" title="Logged in: ">
+                //            <img src="${avatar_url}" alt="${list_of_clients[i]}">                            
+                //        </div>
+                //        <div class="list_name">${list_of_clients[i]}</div>
+                //    </div>`
+                //$("#user_list").append(user_list);
+            }
+        }
+
+
+        // returns the username of the connected id
+        publicChatHub.client.getUsername = function (connected_username) {
+            $("#logged_in_username").html("You are logged in as: " + connected_username);
+        }
+
+        // send message to all hub and clients
+        $("#send").on("click", function () {
+            var message = $("#message").val();
+
+            // check if user is alone in public chat
+            var number_of_clients = $("#user_count").text();
+        
+            if (number_of_clients === "1") {
+                if (message.length === 0) {
+                    return;
+                }
+                var r = confirm("It seems your are the only one around...\nNo one can hear you!\nDo you still want to send the message?");
+                if (r == false) {
+                    return;
+                }
+            }
+
+            if (message.length === 0) {
+                return;
+            }
+            publicChatHub.server.broadcast(message);
+            $("#message").val('');
+            $("#message").focus();
+        })
+
+        // send message by pressing enter
+        $(document).keypress(function (keypressed) {
+            if (keypressed.which == 13) {
+                var message = $("#message").val();
+
+
+                // check if user is alone in public chat
+                var number_of_clients = $("#user_count").text();
+
+                if (number_of_clients === "1") {
+                    if (message.length === 0) {
+                        return;
+                    }
+                    var r = confirm("It seems your are the only one around...\nNo one can hear you!\nDo you still want to send the message?");
+                    if (r == false) {
+                        return;
+                    }
+                }
+
+                if (message.length === 0) {
+                    return;
+                }
+                publicChatHub.server.broadcast(message);
+                $("#message").focus(); // cursor returns to input text
+                $("#message").val('');
+            }
+        });
+
+        // delete messages for all clients
+        $("#delete").on("click", function () {
+            publicChatHub.server.deleteAll();
+        })
+
+        // clear screen for particular client. Does not delete messages
+        $("#clear").on("click", function () {
+            $("#chat_area").empty();
+            $("#message").focus();
+        })
+
+       //==========================================================================================================//
+        // load history of public chat
+        $("#load_history").on("click", function (e) {
+
+            $("#chat_area").empty();
+            logged_in_username = "@Context.User.Identity.Name"; // douleuei!
+
+            // to be https in Azure
+            let url = "http://" + window.location.host + "@Url.Action("GetPublicHistory", "MessageRepository")";
+
+            $.get(url)
+                .then((response) => {
+
+                    if (response == "No messages")
+                    {
+                        $("#load_history").notify("You do not have any messages!", {
+                            className: 'info',
+                            clickToHide: false,
+                            autoHide: true,
+                            autoHideDelay: 2000                                            
+                        });   
+
+                    } else {
+                        response.messages.map(message => {
+
+                            let messageDiv = '';
+
+                            var date = moment(new Date(parseInt(message.Date.substr(6))));
+
+                            if (message.Sender == logged_in_username) {
+
+                                messageDiv = `<div class="answer_right">
+                                            <div class="chat_name">Me</div>
+                                            <div class="chat_avatar">
+                                                <img src="${message.Avatar}" alt="${message.Sender}">
+                                            </div>                                            
+                                            <div class="chat_text">${message.Body}</div>
+                                            <div class="time_right" id="${date}">${moment(date).fromNow()}</div>
+                                            <i class="far fa-heart heart_right" id="m-${message.MessageId}"><div></div></i>
+                                            </div>`;
+
+                            } else {
+                                messageDiv = `<div class="answer_left">
+                                            <div class="chat_name">${message.Sender}</div>
+                                            <div class="chat_avatar">
+                                                <img src="${message.Avatar}" alt="${message.Sender}">
+                                            </div>                                            
+                                            <div class="chat_text">${message.Body}</div>
+                                            <div class="time_left" id="${date}">${moment(date).fromNow()}</div>
+                                            <i class="far fa-heart heart_left" id="m-${message.MessageId}"><div></div></i>
+                                            </div>`;
+                            }
+                            $("#chat_area").append(messageDiv);
+
+                            // Scroll to bottom of chat
+                            scrollToBottom();
+
+                        });
+                    }
+
+                    
+                }) 
+            $("#message").focus();
+        });
+
+        //==========================================================================================================//
+
+        // called after client sends Broadcast() to hub
+        publicChatHub.client.receive = function (username, message, message_date, user_avatar, messageId) {
+
+            let user_message = '';
+
+
+            if (username === "me") {
+                
+                //user_message = `<div class="answer_right">
+                //                <div class="chat_name">Me</div>
+                //                <div class="chat_avatar">
+                //                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="${username}">
+                //                </div>
+                //                <div class="chat_text">${message}</div>
+                //                <div class="time_right" id="${message_date}">${moment(message_date).fromNow()}</div>
+                //                </div>`;
+                user_message = `<div class="answer_right">
+                                <div class="chat_name">Me</div>
+                                <div class="chat_avatar">
+                                    <img src="${user_avatar}" alt="${username}">
+                                </div>
+                                <div class="chat_text">${message}</div>
+                                <div class="time_right" id="${message_date}">${moment(message_date).fromNow()}</div>                                
+                                <i class="far fa-heart heart_right" id="m-${messageId}"><div>0</div></i>                                
+                                </div>`;
+                
+
+            } else {                
+
+                user_message = `<div class="answer_left" id="guid_x">
+                                <div class="chat_name">${username}</div>
+                                <div class="chat_avatar">
+                                    <img src="${user_avatar}" alt="${username}">
+                                </div>
+                                <div class="chat_text">${message}</div>
+                                <div class="time_left" id="${message_date}">${moment(message_date).fromNow()}</div>
+                                <i class="far fa-heart heart_left" id="m-${messageId}"><div>0</div></i>
+                                </div>`;
+
+            }
+            $("#chat_area").append(user_message);
+
+            // Scroll to bottom of chat
+            scrollToBottom();
+            
+
+        }
+
+        // delete messages for all clients
+        publicChatHub.client.delete = function () {
+            $("#chat_area").empty();
+            $("#message").focus();
+        }
+
+        // update the time of all chat messages with time interval
+        function timer() {
+
+            $('.time_right').each(function () {
+                let date = $(this).attr("id");
+                $(this).html(moment(date).fromNow());
+            });
+
+            $('.time_left').each(function () {
+                let date = $(this).attr("id");
+                $(this).html(moment(date).fromNow());
+            });
+        }
+
+        setInterval(timer, 60000);
+
+        // scroll to bottom of page if there are too many messages
+        function scrollToBottom() {
+            var $chat_area = $("#chat_area");
+            $chat_area.scrollTop($chat_area[0].scrollHeight);
+        }
+
+        //===================================================================================================================//
+
+        // Get the likes from the Hub. All except the caller client
+        publicChatHub.client.getHearts = function (heart_id, heart_clicks) {
+
+            var current_heart_clicks;
+            
+            current_heart_clicks = parseInt($(":first", `#${heart_id}`).text());
+
+            current_heart_clicks = current_heart_clicks + heart_clicks;
+           
+            if (current_heart_clicks == 0) {
+                $(":first", `#${heart_id}`).html("0");
+            }
+            else {
+                $(":first", `#${heart_id}`).html(current_heart_clicks);
+            }           
+
+        }
+
+        //===================================================================================================================//
+
+
+    </script>
+}
+
+@section styles {
+    <style>
+
+        .heart_right {
+            font-size: 20px;
+            position: absolute;
+            top: 1px;
+            left: 0;
+            transition: all .2s ease-in-out;
+        }
+
+        .heart_right:hover {
+            color: red;
+            cursor: pointer;
+            transform: scale(1.5);
+        }
+
+        .heart_right :first-child {
+            font-weight: 500;
+            position: absolute;
+            top: 0px;
+            left: 23px;
+        }
+
+
+
+        .heart_left {
+            font-size: 20px;
+            position: absolute;
+            top: 1px;
+            right: 0;
+            transition: all .2s ease-in-out;
+        }
+
+            .heart_left:hover {
+                color: red;
+                cursor: pointer;
+                transform: scale(1.5);
+            }
+
+        .heart_left :first-child {
+            font-weight: 500;
+            position: absolute;
+            top: 0px;
+            right: 23px;
+        }        
+
+        /*===========================================*/
+        .container-fluid { 
+            /*border: 1px;
+            border-style: solid;
+            border-color: steelblue;*/
+            /*height: calc(100vh - 160px);*/
+            max-width: 90%;
+            margin-top: 1em;
+        }
+
+        /*  Connected Users List + Connected User count  */
+        .connecter_users_header {
+            padding-right:0px;
+        }
+
+        #chat_label {
+            padding: 0px
+        }
+
+        #public_chat_title {
+            padding: 5px;
+            border: 5px;
+            border-style: solid;
+            border-color: rgba(77, 87, 109, 0.8);
+            margin: 7px;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+        #logged_in_username {
+            margin-left: 20px;
+        }
+
+        #user_count {
+            margin-left: 0px;
+            /*border: 1px;
+            border-style: solid;
+            border-color: green;*/
+        }
+
+        #user_list {
+            width: 100%; /*allagi apo 15em*/
+            height: 65vh;
+            /*border: 1px;
+            border-style: solid;
+            border-color: green;*/
+            padding-left: 1em;
+            padding-top: 0.5em;
+            /*background-color: rgba(128, 131, 180, 0.8);*/
+            background-color: rgba(77, 87, 109, 0.8);
+            overflow: auto;
+            border-radius: 20px;
+        }
+
+        /* User list  */
+        .list_user {
+            position: relative; /* xreaizetai xwris top left klp? */
+            display: block;
+            /*cursor: pointer; */
+            margin: 0px 0 5px 0px; /* evala padding stin user_list kai oxi ston kathe user */
+            height:60px;
+        }
+
+        .list_avatar {
+            width: 50px;
+            height: 50px;
+            /* position: absolute; */
+            float: left; /* xreaizetai? */
+        }
+
+        .list_avatar img {
+            border-radius: 40px;
+            height: 100%; /* to 100% tou parent dld tou list_avatar */
+            border: 2px;
+            border-style: solid;
+            border-color: #271044;
+        }
+
+        .list_name {
+            padding-top: 0.6em;
+            padding-left: 1em;
+            display: inline-block;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.1em;
+        }
+
+        /*=============================  Chat Area  ============================= */
+
+        #chat_area {
+            height: 25em; /* edw thelei allagi!*/
+            /*border: 1px;
+            border-style: solid;
+            border-color: green;*/
+            margin-left:20px;
+            overflow: auto;
+            /*background-color: rgba(128, 131, 180, 0.7);*/
+            background-color:rgba(174, 183, 185, 0.7);
+            border-radius:25px;
+        }
+
+        #text_input {
+            align-items: flex-start;
+            justify-content: center;
+            display: flex;
+            width: 100%;
+        }
+
+        #message {
+            width: 100%;
+            max-width: 100%;
+            margin: 4px 0 4px 20px;
+        }
+
+        /* =============== Buttons =============== */
+        #send {
+            margin: 4px 0 4px 0;
+            cursor: pointer;
+        }
+
+        #send:active {
+            background-color: darkgreen;
+            color: white;
+        }
+
+        #send:hover {
+            background-color: darkgreen;
+            color: white;
+        }
+
+        #send:focus {
+            background-color: #28a745;
+            color: white;
+        }
+                
+        /* ============================== */
+        #load_history {
+            margin: 4px 0 4px 0;
+            cursor: pointer;
+        }
+
+        #Load_history:active {
+            background-color: blue;
+            color: white;
+        }
+
+        #load_history:hover {
+            background-color: blue;
+            color: white;
+        }
+
+        #load_history:focus {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* ============================== */
+
+        #clear {
+            margin: 4px 0 4px 0;
+            cursor: pointer;
+        }
+
+        #clear:active {
+            background-color: red;
+            color: white;
+        }
+
+        #clear:hover {
+            background-color: red;
+            color: white;
+        }
+
+        #clear:focus {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        /* ============================== */
+        .answer_right {
+            float: right;
+            clear: both;
+            padding-right: 2.8em;
+            margin-bottom: 2em;
+            position: relative;
+            margin-top: 0.5em;
+        }
+
+        .answer_left {
+            float: left;
+            clear: both;
+            padding-left: 2.8em;
+            margin-bottom: 2em;
+            position: relative;
+            margin-top: 0.5em;
+        }
+
+        /* ======= works ======= */
+        .answer_right .chat_text:after {
+            content: '';
+            position: absolute;
+            right: 3em;
+            width: 0;
+            height: 0;
+            
+            bottom: 1.6em; /* dokimatiko anti miden, logw tou div time */
+            border: 1.1em solid transparent;
+            border-left-color: #4bbc45;
+            border-right: 0;
+            border-bottom: 0;
+            margin-top: 1.18em;
+            margin-right: -1em;
+        }
+
+        .answer_left .chat_text:after {
+            content: '';
+            position: absolute;
+            left: 3em;
+            width: 0;
+            height: 0;
+            bottom: 1.6em; /* dokimatiko anti miden, logw tou div time */
+            border: 1.1em solid transparent;
+            border-right-color: #7266ba;
+            border-left: 0;
+            border-bottom: 0;
+            margin-top: 1.18em;
+            margin-left: -1em;
+        }
+
+        /*===============================================================================*/
+
+        .time_right, .time_left {
+            font-style: italic;
+        }
+
+        /*===============================================================================*/
+
+        .chat_text {
+            padding: 0.9em;
+            max-width: 27em;
+            overflow-wrap: break-word;
+        }
+
+        .answer_right .chat_text {
+            text-align: justify;
+            background: #4bbc45;
+            color: #ffffff;
+            border-radius: 8px 8px 0 8px;
+        }
+
+        .answer_left .chat_text {
+            text-align: justify;
+            background: #7266ba;
+            color: #ffffff;
+            border-radius: 8px 8px 8px 0;
+        }
+
+        .answer_right .chat_avatar {
+            width: 40px;
+            height: 40px;
+            float: right;
+            position: absolute;
+            right: -0.5em;
+            margin-top: 1.9em;
+            bottom: 0.5em; /* dokimastiko anti -1em logw tou div time */
+        }
+
+        .answer_left .chat_avatar {
+            width: 40px;
+            height: 40px;
+            float: right;
+            position: absolute;
+            left: -0.5em;
+            margin-top: 1.9em;
+            bottom: 0.5em; /* dokimastiko anti -1em logw tou div time */
+        }
+
+        .chat_avatar img {
+            border-radius: 20px;
+            height: 100%; /* to 100% tou parent dld tou list_avatar */
+            border: 1px;
+            border-style: solid;
+            border-color: #271044;
+        }
+
+        .answer_right .chat_name {
+            text-align: right;
+        }
+
+        .answer_left .chat_name {
+            text-align: left;
+        }
+
+
+        /*===========================================*/
+
+    </style>
+}

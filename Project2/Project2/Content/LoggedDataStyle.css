@@ -1,0 +1,106 @@
+﻿
+.col-md-4 {
+    border-radius: 0.5em;
+    margin-top: 130px;
+    width: 20%;
+    height: 310px;
+    position: relative;
+    z-index: 3;
+    padding-left: 20px;
+    grid-row: auto;
+}
+    .col-md-4:before {
+        border-radius: 0.5em;
+        top: 0;
+        left: 0;
+        color: white;
+        font-size: 30px;
+        font-family: sans-serif;
+        width: 80%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to bottom right,#7e50a3, #8A7F8D, #B2BEB5 );
+        transition: all 0.3s;
+        z-index: 3;
+        opacity:0.9;
+    }
+
+    .col-md-4:after {
+        border-radius: 0.5em;
+        position: absolute;
+        top: 0;
+        background: linear-gradient(to bottom right,#7e50a3, #91A3B0, #B2BEB5 );
+        color: white;
+        font-size: 22px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        text-align: center;
+        height: 80%;
+        width: 76%;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s;
+        transform: translateY(50%) rotateX(-90deg);
+        opacity: 0;
+        z-index: 3;
+    }
+
+    .col-md-4:hover:before {
+        border-radius: 0.5em;
+        transform: translateY(-50%) rotateX(90deg);
+        z-index: 3;
+    }
+
+    .col-md-4:hover:after {
+        border-radius: 0.5em;
+        transform: rotateX(0);
+        opacity: 0.9;
+        z-index: 3;
+    }
+
+#one::before {
+    content: "Project Team Leader/Database Leader";
+}
+
+#one::after {
+    content: "Role consists of : Overall DataBase creation and managment, Admin pages overall responsible, front end support  , back end support , overall tracking,coordination and project implementation on strict timeline."
+}
+
+
+#two::before {
+    content: "Section Responsible";
+}
+
+#two::after {
+    content: " Role consists of :  Login,Register,main Menu creation and managment "
+}
+#three::before {
+    content: " Product Manager - Public Chat";
+}
+
+#three::after {
+    content: "Role consists of : Front & Back End overall page creator & functionality responsible of Public Messaging Feature"
+}
+
+
+#four::before {
+    content: " Product Manager - Personal  Chat";
+}
+
+#four::after {
+    content: "Role consists of : Front & Back End overall page creator & functionality responsible of Personal Messaging Feature"
+}
+
+#five::before {
+    content: "Web Designer ";
+}
+
+#five::after {
+    content: "Role consists of: Not aforementioned pages creation and overall front support ";
+}
+
+
+
+
+

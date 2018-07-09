@@ -1,0 +1,117 @@
+﻿
+
+
+h1 {
+    font-size: 100px;
+    letter-spacing: 10px;
+    background: -webkit-linear-gradient(right, blue, red);
+    background: linear-gradient(to right, white, gray);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Arial Rounded MT';
+}
+
+}
+
+.bill1 {
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    position: relative;
+}
+
+.rain div {
+    display: inline-block;
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    position: relative;
+    -webkit-animation: rain 5s infinite linear;
+    -moz-animation: rain 5s infinite linear;
+}
+
+    .rain div:nth-child(5n+5) {
+        -webkit-animation-delay: 1.75s;
+        -moz-animation-delay: 1.75s;
+    }
+
+    .rain div:nth-child(3n+2) {
+        -webkit-animation-delay:2.5s;
+        -moz-animation-delay: 2.5s;
+    }
+
+    .rain div:nth-child(2n+5) {
+        -webkit-animation-delay: 3s;
+        -moz-animation-delay: 3s;
+    }
+
+    .rain div:nth-child(3n+10) {
+        -webkit-animation-delay: 3.5s;
+        -moz-animation-delay: 3.5s;
+    }
+
+    .rain div:nth-child(7n+2) {
+        -webkit-animation-delay: 4s;
+        -moz-animation-delay: 4s;
+    }
+
+    .rain div:nth-child(4n+5) {
+        -webkit-animation-delay: 4.25s;
+        -moz-animation-delay: 4.25s;
+    }
+
+    .rain div:nth-child(3n+7) {
+        -webkit-animation-delay: 5s;
+        -moz-animation-delay: 5s;
+    }
+
+@-webkit-keyframes rain {
+    0% {
+        opacity: 1;
+        -webkit-transform: translate(0, 0px) rotateZ(0deg);
+    }
+
+    75% {
+        opacity: 1;
+        -webkit-transform: translate(350px, 950px) rotateZ(200deg);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate(600px, 1250px) rotateZ(160deg);
+    }
+}
+
+@-moz-keyframes rain {
+    0% {
+        opacity: 1;
+        -webkit-transform: translate(0, 0px) rotateZ(0deg);
+    }
+
+    75% {
+        opacity: 1;
+        -webkit-transform: translate(350px, 950px) rotateZ(200deg);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate(600px, 1250px) rotateZ(120deg);
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .rain div {
+        height: 50px;
+        width: 50px;
+    }
+
+    h1 {
+        font-size: 25px;
+        letter-spacing: 5px;
+    }
+
+   
+
+}
+

@@ -1,0 +1,135 @@
+﻿@model Project2.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container-fluid">
+    <div class="row" id="create-title">
+        <h1>Create User</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+
+        </div>
+        <div class="col-lg-4">
+            <div class="create-form text-aligner-center">
+            @using (Html.BeginForm("Create", "ApplicationUsers", FormMethod.Post, new { @class = "form-group", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+ 
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.Username, new { placeholder = "Enter Username", @class = "form-control create-form-control text-aligner-center" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.Email, new { placeholder = "Enter Email",  @class = "form-control create-form-control text-aligner-center" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Enter Password", @class = "form-control create-form-control text-aligner-center" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password", @class = "form-control create-form-control text-aligner-center" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row buttons">
+                        <div class="col-md-6">
+                            <div>
+                                <a href="@Url.Action("Index","ApplicationUsers")" class="btn btn-lg form-control create-buttons create-info" role="button" aria-pressed="true">Back To List</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-lg form-control create-buttons create-success">Create</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+    </div>
+</div>
+
+@section adminstyles {
+<style>
+    /**************** Buttons ******************/
+    .create-buttons {
+        background-color: transparent;
+        color: white;
+    }
+
+    .create-info:hover {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .create-success:hover {
+        background-color: #28a745;
+        color: white;
+    }
+
+
+
+    #create-title {
+        justify-content: center;
+        padding-bottom: 1rem;
+    }
+
+    #create-title h1 {
+        font-size: 30px;
+        font-weight: 600;
+        color: white;
+    }
+
+
+    /**************** Form ****************/
+    .create-form-control {
+        height: 3rem;
+        font-size: 1.2rem;
+        max-width: 100%;
+    }
+
+    .control-label {
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    label {
+        display: inline;
+    }
+
+    .create-form {
+        background: rgba(0,0,0,0.5);
+        border-radius: 15px;
+        padding: 1rem;
+        min-width: 200px;
+    }
+
+    .buttons {
+        padding: 0 1rem 0 1rem;
+    }
+
+    .text-aligner-center {
+        text-align: center;
+    }
+</style>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

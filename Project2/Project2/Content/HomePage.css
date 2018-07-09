@@ -1,0 +1,36 @@
+﻿.home-title h1 {
+    color: white;
+    text-align: center;
+    font-size: 60px;
+    font-weight: 600;
+    text-shadow: 2px 2px #000000;
+}
+
+.home-title h2 {
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 400;
+}
+
+.anestis-button {
+    background: rgba(21, 13, 44, 0.68);
+    border-radius: 15px 30px;
+    font-size: x-large;
+    display: block;
+    margin: auto;
+    min-width: 17rem;
+}
+
+    .anestis-button:hover {
+        background-color: rgba(48,113,116, .68);
+    }
+
+    .anestis-button:focus {
+        background-color: rgba(48,113,116, .68);
+    }
+
+.hidden {
+    display: none;
+}
+

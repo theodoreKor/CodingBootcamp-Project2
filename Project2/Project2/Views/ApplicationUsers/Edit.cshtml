@@ -1,0 +1,349 @@
+﻿@model Project2.Models.EditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container-fluid" id="edit-page">
+    <div class="row" id="edit-title">
+        <h1>Edit User</h1>
+    </div>
+    <div class="row" id="edit-main-body">
+        <div class="col-lg-4 my-col" id="first-col">
+            <div id="card" class="card-container">
+
+                <div class="row">
+                    <div class="col-md-12 edit-card-title">
+                        <h1>@Model.UserName</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="avatar" style="background: url(@Model.Avatar); background-size: cover;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 my-col">
+            <div class="edit-form text-aligner-center">
+                @using (Html.BeginForm("Edit", "ApplicationUsers", FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="form-horizontal">
+                    <p style="color: red;">@TempData["UserNameStatusMessage"]</p>
+                    <p style="color: red;">@TempData["EmailStatusMessage"]</p>
+                    
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <p>@Html.ValidationMessageFor(model => model.UserName, "", new { @class="text-danger" })</p>
+                    <p>@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })</p>
+                    <p>@Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })</p>
+
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Avatar)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control edit-form-control text-aligner-center", placeholder = Model.UserName } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control edit-form-control text-aligner-center", placeholder = Model.Email } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control edit-form-control text-aligner-center", placeholder = Model.PhoneNumber } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.DropDownListFor(model => model.Role, new SelectList(Enum.GetValues(typeof(Project2.Models.UserRoles))), "Select Role")
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row buttons">
+                            <div class="col-md-6">
+                                <a href="@Url.Action("Index","ApplicationUsers")" class="btn btn-lg form-control edit-buttons edit-info" role="button" aria-pressed="true" style="display:inline-block;">Back To List</a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-lg form-control edit-buttons edit-success" style="display:inline-block;">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="delete-button" class="row buttons">
+                            <div class="col-md-12">
+                                <button type="button" id="delete" class="btn btn-block btn-lg edit-buttons edit-delete">Delete</button>
+                            </div>
+                        </div>
+                        <div id="are-you-sure-div" class="row buttons" style="display:none;">
+                            <div class="col-md-12">
+                                <p style="color:white; font-size:1.5rem; display:inline-block;">Are you sure?</p>
+                                <a href="@Url.Action("DeleteUser","ApplicationUsers", new { id = Model.Id })" style="width: 4rem; display:inline-block;" class="btn btn-lg edit-form-control edit-buttons edit-success" role="button" aria-pressed="true">Yes</a>
+                                <p style="color:white; font-size:1.5rem; display:inline-block;">/</p>
+                                <button id="no-button" type="button" class="btn edit-form-control edit-buttons edit-delete" style="width: 4rem; display:inline-block">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+                </div>
+        </div>
+        <div class="col-lg-4 my-col" id="third-col">
+            <div class="row">
+                <div class="col-md-12 canvas-title">
+                    <h2>Messages</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 pie-chart">
+                    <canvas id="gameStats" width="220" height="220" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section adminstyles {
+<style>
+    /************ Buttons  **************/
+    .edit-buttons {
+        background-color: transparent;
+        color: white;
+    }
+
+    .edit-info:hover {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .edit-delete:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .edit-success:hover {
+        background-color: #28a745;
+        color: white;
+    }
+
+    #first-col {
+        padding-top: 4rem;
+    }
+
+    #third-col {
+        padding-top: 5rem;
+    }
+
+    .my-col {
+        padding: 1rem;
+    }
+
+    #edit-page {
+        height: 100%;
+    }
+
+    #edit-title {
+        justify-content: center;
+    }
+
+    #edit-title h1 {
+        font-size: 30px;
+        font-weight: 600;
+        color:white;
+    }
+
+    .text-aligner-center {
+        text-align: center;
+    }
+
+/************** Form  *****************/
+    .edit-form-control {
+        height: 3rem;
+        font-size: 1.2rem;
+        max-width: 100%;
+    }
+
+    .control-label {
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    label {
+        display: inline;
+    }
+
+    .edit-form {
+        background: rgba(0,0,0,0.5);
+        border-radius: 15px;
+        padding: 1rem;
+        min-width: 200px;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .buttons {
+        padding: 0 1rem 0 1rem;
+    }
+
+    /********** Pie Chart Canvas *****************/
+
+    .canvas-title {
+        text-align: center;
+    }
+
+    .canvas-title h2{
+        display: inline-block;
+        color: white;
+        font-size: 30px;
+    }
+
+    .pie-chart {
+        text-align: center;
+    }
+
+    #gameStats {
+        margin: 4rem auto;
+    }
+
+/***************** Card ********************/
+
+    #card {
+        padding-top: 1rem;
+        overflow: hidden;
+        text-align: center;
+        min-width: 200px;
+        max-width: 320px;
+        height: 24rem;
+        background: url(https://ak3.picdn.net/shutterstock/videos/30120433/thumb/11.jpg?i10c=img);
+        background-size: cover;
+        background-position: center center;
+        margin: auto;
+        box-shadow: 0px 30px 30px -20px rgba(0,0,0,1), inset 0 0 0 1000px rgba(67,52,109,.6);
+        transition: all .4s cubic-bezier(.37,.26,.35,1)
+    }
+    .edit-card-title h1{
+        opacity: 0;
+        color: white;
+        font-size: xx-large;
+    }
+
+    #card:hover .edit-card-title h1 {
+        opacity: 1;
+    }
+        #card:hover {
+            box-shadow: 0px 30px 30px -20px rgba(0,0,0,.9), inset 0 0 0 1000px rgba(67,52,109,.2);
+            top: 5%;
+            left: 5%;
+        }
+
+    #avatar {
+        transition: all .4s cubic-bezier(.37,.26,.35,1);
+        -webkit-animation: circleAn 4s infinite;
+        animation: circleAn 4s infinite;
+        width: 150px;
+        height: 150px;
+        /*position: absolute;*/
+        padding: 0;
+        /*top: 30%;
+        left: 25%;*/
+        /*right: 0;
+        bottom: 0;*/
+        margin: 3rem auto;
+        /*background: url(https://randomuser.me/api/portraits/men/99.jpg);*/
+        background-size: cover;
+        background-position: center center;
+        border-radius: 100%;
+        box-shadow: 0px 30px 30px -25px rgba(0,0,0,0.6);
+    }
+
+    @@-webkit-keyframes circleAn {
+        0% {
+            box-shadow: 0px 30px 30px -25px rgba(0,0,0,0.6), 0px 0px 0px 0px rgba(102,52,105,1), 0px 0px 0px 0px rgba(102,52,105,.7), 0px 0px 0px 0px rgba(102,52,105,.5);
+        }
+
+        100% {
+            box-shadow: 0px 30px 30px -25px rgba(0,0,0,0.6), 0px 0px 0px 70px rgba(102,52,105,0), 0px 0px 0px 200px rgba(102,52,105,0), 0px 0px 0px 300px rgba(102,52,105,0);
+        }
+    }
+
+    @@keyframes circleAn {
+        0% {
+            box-shadow: 0px 30px 30px -25px rgba(0,0,0,0.6), 0px 0px 0px 0px rgba(102,52,105,1), 0px 0px 0px 0px rgba(102,52,105,.7), 0px 0px 0px 0px rgba(102,52,105,.5);
+        }
+
+        100% {
+            box-shadow: 0px 30px 30px -25px rgba(0,0,0,0.6), 0px 0px 0px 70px rgba(102,52,105,0), 0px 0px 0px 200px rgba(102,52,105,0), 0px 0px 0px 300px rgba(102,52,105,0);
+        }
+    }
+
+</style>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js'></script>
+<script>
+    // get the messages count
+    var messagesCount = null;
+
+    $.ajax({
+        url: "@Url.Action("MessagesCount","MessageRepository", new { id = Model.Id })",
+        method: "GET",
+        success: function (response) {
+            messagesCount = response;
+            CallPieChart();
+            
+        }
+    });
+
+    // pie chart canvas
+    function CallPieChart() {
+        var gameStats = [
+            {
+                value: (messagesCount.sentMessagesCount + messagesCount.receivedMessagesCount),
+                color: "#4d5360",
+                highlight: "#616774",
+                label: "Total"
+            },
+            {
+                value: messagesCount.sentMessagesCount,
+                color: "#fdb45c",
+                highlight: "#ffc870",
+                label: "Sent"
+            },
+            {
+                value: messagesCount.receivedMessagesCount,
+                color: "#949FB1",
+                highlight: "#A8B3C5",
+                label: "Received"
+            }
+        ];
+        var ctx = document.getElementById("gameStats").getContext("2d");
+        ctx.canvas.width = 220;
+        ctx.canvas.height = 220;
+        window.myDoughnut = new Chart(ctx).Doughnut(gameStats, {});
+    }
+
+    // delete user
+    $('#delete').click(function () {
+        $('#delete-button').hide();
+        $('#are-you-sure-div').fadeIn();
+    })
+
+    $('#no-button').click(function () {
+        $('#are-you-sure-div').hide();
+        $('#delete-button').fadeIn();
+    });
+</script>

@@ -1,0 +1,188 @@
+﻿@using Project2.Models
+@model StatsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<link href="~/Content/Statistics.css" rel="stylesheet" />
+<style>
+
+    .bird-container {
+        z-index: 0;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" style="height: 100%;">
+        <div class="col-md-4 stats-my-col" id="stasts-first-col">
+            <div id="stats-card" class="stats-card-container">
+
+                <div class="row">
+                    <div class="col-md-12 stats-card-title">
+                        <h1>@Model.UserName</h1>
+                    </div>
+                </div>
+                <div class="row" style="height: 90%;">
+                    <div class="col-md-12">
+                        <div id="stats-avatar" style="background: url(@Model.Avatar); background-size: cover;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-align: center;">
+                    <a href="@Url.Action("DownloadMessages", "Statistics", new { id = Model.Id})" class="btn btn-info download-button" role="button">Download Messages</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- End of first column -->
+
+        @if (Model.TopUsersSent.Count < 3 || Model.TopUsersSent == null || Model.TopUsersReceived.Count < 3 || Model.TopUsersReceived == null)
+        {
+            <div id="anti-social">Sorry cannot display stats for such an antisocial person!</div>
+        }
+        else
+        {
+
+
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="backgroundText">Favorite Users</div>
+                            </div>
+                            <div class="col-md-12 ">
+                                <canvas id="champData" style="width: 300px; height: 150px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="backgroundText">Messages </div>
+                            </div>
+                            <div class="col-md-12 pie-chart">
+                                <canvas id="gameStats" style=" width:180px; height:180px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----- End of second column's First row ------>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="backgroundText" style="text-align:right; margin-top: 2rem;">Favorite To: </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                            </div>
+                            <div class="col-md-12">
+                                <canvas id="roleStats" width="180" height="180" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!----- End of second column's Secnod row ------>
+        }
+    </div>
+</div>
+
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js'></script>
+
+@if (Model.TopUsersSent.Count < 3 || Model.TopUsersSent == null || Model.TopUsersReceived.Count < 3 || Model.TopUsersReceived == null)
+{
+
+}
+else
+{
+    <script>
+
+    // bar chart
+    var champData = {
+        //labels: ["Admin", "Kanelos", "Dimitra"],
+        labels: ["@Model.TopUsersSent[0]", "@Model.TopUsersSent[1]", "@Model.TopUsersSent[2]"],
+        datasets: [
+            {
+                label: "Data",
+                fillColor: "rgba(151,187,205,0.5)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [@Model.TopCountsSent[0], @Model.TopCountsSent[1], @Model.TopCountsSent[2]]
+            }
+            //{
+            //    label: "Data 2",
+            //    fillColor: "rgba(220,220,220,0.5)",
+            //    strokeColor: "rgba(220,220,220,0.8)",
+            //    highlightFill: "rgba(220,220,220,0.75)",
+            //    highlightStroke: "rgba(220,220,220,1)",
+            //    data: [55, 15, 30]
+            //}
+        ]
+    };
+    var ctx = document.getElementById("champData").getContext("2d");
+    window.myBarChart = new Chart(ctx).Bar(champData, { responsive: true });
+
+    // pie chart 1
+
+    var gameStats = [
+        {
+            value: @Model.MessagesCount[2],
+            color: "   #282d4f",
+            highlight: "rgba(151,187,205,0.5)",
+            label: "Total"
+        },
+        {
+            value: @Model.MessagesCount[0],
+            color: "#23103a ",
+            highlight: "rgba(151,187,205,0.5)",
+            label: "Sent"
+        },
+        {
+            value: @Model.MessagesCount[1],
+            color: "#f9e75e",
+            highlight: "rgba(151,187,205,0.5)",
+            label: "Received"
+        }
+    ];
+    var ctx = document.getElementById("gameStats").getContext("2d");
+    ctx.canvas.width = 180;
+    ctx.canvas.height = 180;
+    window.myDoughnut = new Chart(ctx).Doughnut(gameStats, {});
+
+
+    // pie chart 2
+    var roleStats = [
+        {
+            value: @Model.TopCountsReceived[0],
+            color: "#f9e75e",
+            highlight: "rgba(151,187,205,0.5)",
+            label: "@Model.TopUsersReceived[0]"
+        },
+        {
+            value: @Model.TopCountsReceived[1],
+            color: "#ff5f5f",
+            highlight: "rgba(151,187,205,0.5)",
+            label: "@Model.TopUsersReceived[1]"
+        },
+        {
+            value: @Model.TopCountsReceived[2],
+            color: "#333366",
+            highlight: "rgba(151,187,205,0.5)",
+            label: "@Model.TopUsersReceived[2]"
+        }
+    ];
+    var ctx = document.getElementById("roleStats").getContext("2d");
+    ctx.canvas.width = 180;
+    ctx.canvas.height = 180;
+    window.myPolarArea = new Chart(ctx).PolarArea(roleStats, { responsive: false });
+    </script>
+}
+
